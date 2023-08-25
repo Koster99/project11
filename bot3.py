@@ -11,19 +11,21 @@ class Name(Field):
 
 class Phone(Field):
     def __init__(self, phone):
-        self.value = None
-        self.set_phone(phone)
+        self.__value = None
+        self.value = phone
 
+    @property
+    def value(self):
+        return self.__value
 
-    def set_phone(self, phone):
-        # Додайте перевірку на коректність номера телефону
-        if self.is_valid_phone(phone):
-            self.value = phone
-        else:
-            raise ValueError("Invalid phone number")
+    @value.setter
+    def value(self, new_value):
+        if self.is_valid_phone(new_value):
+            self.__value = new_value
 
     def is_valid_phone(self, phone):
-        return True  
+        if phone.isdigit():
+            return True
 
 class Birthday(Field):
     def __init__(self, birthday):
